@@ -10,6 +10,8 @@ const { JWT_SECRET, JWT_EXPIRES_IN, REFRESH_TOKEN_SECRET, REFRESH_TOKEN_EXPIRES_
   REFRESH_TOKEN_EXPIRES_IN: string;
 };
 
+console.log(JWT_SECRET, JWT_EXPIRES_IN, REFRESH_TOKEN_SECRET, REFRESH_TOKEN_EXPIRES_IN);
+
 interface TokenPayload {
   userId: string;
   username: string;

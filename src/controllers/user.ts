@@ -47,6 +47,7 @@ route.post('/register', zValidator('json', UserSchema), async (c) => {
       ...tokens
     }, 201);
   } catch (error) {
+    console.error('Error registering user:', error);
     if (error instanceof z.ZodError) {
       return c.json({ error: error.errors }, 400);
     }
@@ -59,6 +60,7 @@ route.post('/login', zValidator("json", LoginSchema), async (c) => {
     const validatedCredentials = c.req.valid("json");
 
     const user = getUser(validatedCredentials.username);
+    console.log('user', user);
     if (!user) {
       return c.json({ error: 'Utilisateur non trouvé' }, 404);
     }

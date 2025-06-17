@@ -17,6 +17,7 @@ export const LoginSchema = z.object({
 export type User = z.infer<typeof UserSchema>;
 
 export function getUser(id: string) {
+  console.log('users', users.get(id));
   return users.get(id);
 }
 
