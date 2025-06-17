@@ -1,10 +1,12 @@
 // Ici dénissez les fonctions qui vont vous permettre de vérifier et générer des mots de passes sécurisés
 import argon2 from 'argon2';
+import crypto from 'crypto';
 
 export const hashPassword = async (password: string): Promise<{ password: string, salt: string }> => {
   try {
-    const hash = await argon2.hash(password);
-    return { password: hash, salt: hash.slice(0, 32) };
+    const salt = crypto.randomBytes(32).toString('hex');
+    const hash = await argon2.hash(password + salt);
+    return { password: hash, salt };
   } catch (err) {
     console.error('Error hashing password:', err);
     throw err;
@@ -18,7 +20,6 @@ export const verifyPassword = async (
 ): Promise<boolean> => {
   try {
     const isValid = await argon2.verify(hashedPassword, password + salt);
-    console.log('isValid', isValid);
     return isValid;
   } catch (err) {
     console.error('Error verifying password:', err);
