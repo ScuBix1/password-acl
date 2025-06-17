@@ -2,7 +2,9 @@
 import argon2 from 'argon2';
 import crypto from 'crypto';
 
-export const hashPassword = async (password: string): Promise<{ password: string, salt: string }> => {
+export const hashPassword = async (
+  password: string
+): Promise<{ password: string; salt: string }> => {
   try {
     const salt = crypto.randomBytes(32).toString('hex');
     const hash = await argon2.hash(password + salt);
@@ -19,8 +21,7 @@ export const verifyPassword = async (
   hashedPassword: string
 ): Promise<boolean> => {
   try {
-    const isValid = await argon2.verify(hashedPassword, password + salt);
-    return isValid;
+    return argon2.verify(hashedPassword, password + salt);
   } catch (err) {
     console.error('Error verifying password:', err);
     throw err;

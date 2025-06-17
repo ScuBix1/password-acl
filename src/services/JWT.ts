@@ -1,16 +1,19 @@
-import jwt from 'jsonwebtoken';
 import { config } from 'dotenv';
+import jwt from 'jsonwebtoken';
 
 config();
 
-const { JWT_SECRET, JWT_EXPIRES_IN, REFRESH_TOKEN_SECRET, REFRESH_TOKEN_EXPIRES_IN } = process.env as {
+const {
+  JWT_SECRET,
+  JWT_EXPIRES_IN,
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_EXPIRES_IN,
+} = process.env as {
   JWT_SECRET: string;
   JWT_EXPIRES_IN: string;
   REFRESH_TOKEN_SECRET: string;
   REFRESH_TOKEN_EXPIRES_IN: string;
 };
-
-console.log(JWT_SECRET, JWT_EXPIRES_IN, REFRESH_TOKEN_SECRET, REFRESH_TOKEN_EXPIRES_IN);
 
 interface TokenPayload {
   userId: string;
@@ -21,12 +24,12 @@ interface TokenPayload {
 export const generateTokens = (payload: TokenPayload) => {
   // Token d'accès principal
   const accessToken = jwt.sign(payload, JWT_SECRET, {
-    expiresIn: JWT_EXPIRES_IN
+    expiresIn: JWT_EXPIRES_IN,
   });
 
   // Token de rafraîchissement
   const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET, {
-    expiresIn: REFRESH_TOKEN_EXPIRES_IN
+    expiresIn: REFRESH_TOKEN_EXPIRES_IN,
   });
 
   return { accessToken, refreshToken };
